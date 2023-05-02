@@ -1,5 +1,7 @@
 package com.t3.onetomanybi;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -8,6 +10,8 @@ import com.t3.onetomanybi.entity.Cart;
 import com.t3.onetomanybi.entity.Product;
 import com.t3.onetomanybi.repository.CartRepository;
 import com.t3.onetomanybi.repository.ProductRepository;
+
+import jakarta.transaction.Transactional;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -20,8 +24,14 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        createCart();
+        // System.out.println("Get a product with id 1");
+        // Product product = productRepository.findById(1L).get();
+        // System.out.println(product.toString());
+
+        // System.out.println(product.getMyCart().toString());
+
         retrieveCart(1L);
+
     }
 
     public void createCart() {
@@ -66,6 +76,7 @@ public class DataLoader implements CommandLineRunner {
 
     }
 
+    @Transactional
     public void retrieveCart(Long id) {
         Cart cart = cartRepository.findById(id).get();
 
@@ -87,6 +98,26 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Print Product info: ");
         System.out.println(product.toString());
 
+        //Imprime o Carrinho do produto
+        System.out.println("Print Cart Info:");
+        System.out.println(product.getMyCart().toString());
+
+    }
+
+    public void retrieveCartByColor(String color){
+        List<Cart> carts = cartRepository.findByColorIgnoreCase(color);
+
+        carts.forEach((cart -> {
+            System.out.println(cart.toString());
+        }));
+    }
+
+    public void retrieveProductByPrice(int price){
+        List<Product> products = productRepository.findByPrice(price);
+
+        products.forEach((product -> {
+            System.out.println(product.toString());
+        }));
     }
 
 }

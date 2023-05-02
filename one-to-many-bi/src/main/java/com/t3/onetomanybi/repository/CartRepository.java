@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.t3.onetomanybi.entity.Cart;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
-    List<Cart> findByColor(String color);
+    List<Cart> findByColorIgnoreCase(String color);
 }

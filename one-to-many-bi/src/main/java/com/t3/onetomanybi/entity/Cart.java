@@ -18,7 +18,7 @@ public class Cart {
     private String color;
 
     //Lado Inverso
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "myCart")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "myCart")
     private Set<Product> cartProducts;
 
     public void add(Product product){
@@ -37,7 +37,6 @@ public class Cart {
     }
 
 }
-
 
 
 
